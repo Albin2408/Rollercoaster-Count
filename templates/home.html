@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1 class="display-4">Welcome, {{ current_user.username }}!</h1>
+        <p class="lead">Track your rollercoaster experiences and more.</p>
+    </div>
+</div>
+<div class="text-center">
+    <img src="{{ url_for('static', filename='images/steelvengenceNight.jpg') }}" class="img-fluid" alt="Rollercoaster Image">
+</div>
+<div class="mt-4">
+    <h2>Your Rollercoasters</h2>
+    <form class="form-inline my-2 my-lg-0" method="GET" action="{{ url_for('main.home') }}">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search by park" aria-label="Search" name="park">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+    <a href="{{ url_for('main.add_coaster') }}" class="btn btn-primary mt-3">Add a Coaster</a>
+    <div class="mt-4">
+        {% for coaster in coasters %}
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">{{ coaster.name }}</h5>
+                    <p class="card-text">
+                        <strong>Location:</strong> {{ coaster.location }}<br>
+                        <strong>Ridden:</strong> {{ 'Yes' if coaster.ridden else 'No' }}
+                    </p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

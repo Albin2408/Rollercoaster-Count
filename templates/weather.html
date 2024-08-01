@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Weather{% endblock %}
+
+{% block content %}
+  <h1 class="mt-4">Weather</h1>
+  <form method="POST" action="{{ url_for('main.weather') }}">
+    {{ form.hidden_tag() }}
+    <div class="form-group">
+      {{ form.zipcode.label(class="form-label") }}
+      {{ form.zipcode(class="form-control") }}
+    </div>
+    <div class="form-group">
+      {{ form.submit(class="btn btn-primary") }}
+    </div>
+  </form>
+
+  {% if weather_data %}
+    <h2>Weather Forecast</h2>
+    <ul>
+      {% for item in weather_data['list'] %}
+        <li>
+          <strong>{{ item['dt_txt'] }}</strong>: 
+          {{ item['main']['temp'] }} °F, {{ item['weather'][0]['description'].capitalize() }}
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Coasters Ridden{% endblock %}
+
+{% block content %}
+<h1>Coasters Ridden</h1>
+<p>Track all the rollercoasters you've ridden, filtered by park.</p>
+<div class="mt-4">
+    <form class="form-inline my-2 my-lg-0" method="GET" action="{{ url_for('main.coasters_ridden') }}">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search by park" aria-label="Search" name="park">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+    <ul class="list-group mt-4">
+        {% for coaster in coasters %}
+            <li class="list-group-item">
+                {{ coaster.name }} - {{ coaster.location }}
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
