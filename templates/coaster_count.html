@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}Coaster Count{% endblock %}
+
+{% block content %}
+<h1>Your Coaster Count</h1>
+<p>Track all the rollercoasters you've ridden.</p>
+<div class="mt-4">
+    <input class="form-control mb-2" type="text" id="park-search" placeholder="Search by park">
+    <ul class="list-group" id="search-results"></ul>
+    <ul class="list-group" id="coaster-list">
+        {% for coaster in coasters %}
+            <li class="list-group-item">
+                {{ coaster.name }} - {{ coaster.location }}
+                <span class="float-right">
+                    <a href="{{ url_for('main.mark_ridden', coaster_id=coaster.id) }}" class="btn btn-success btn-sm">Mark as Ridden</a>
+                </span>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+<script>
+$(document).ready(function(){
+    $('#park-search').on('input', function(){
+        var searchValue = $(this).val().toLowerCase();
+        $.ajax({
+            url: '{{ url_for("main.search_coasters") }}',
+            type: 'GET',
+            data: {query: searchValue},
+            success: function(response) {
+                $('#search-results').empty();
+                if(response.length > 0) {
+                    response.forEach(function(park) {
+                        $('#search-results').append('<li class="list-group-item">' + park + '</li>');
+                    });
+                    $('#search-results li').on('click', function(){
+                        $('#park-search').val($(this).text());
+                        $('#search-results').empty();
+                        filterCoasters($(this).text());
+                    });
+                }
+            }
+        });
+    });
+
+    function filterCoasters(parkName) {
+        $.ajax({
+            url: '{{ url_for("main.coaster_count") }}',
+            type: 'GET',
+            data: {park: parkName},
+            success: function(response) {
+                $('#coaster-list').html(response);
+            }
+        });
+    }
+});
+</script>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Weather{% endblock %}
+
+{% block content %}
+<h1>Weather</h1>
+<form method="GET" action="{{ url_for('main.weather') }}">
+    <div class="form-group">
+        <label for="zipcode">Zipcode</label>
+        <input type="text" class="form-control" id="zipcode" name="zipcode" placeholder="Enter zipcode" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Get Weather</button>
+</form>
+
+{% if weather_data %}
+    <h2 class="mt-4">Weather Forecast</h2>
+    <div class="card-deck">
+        {% for forecast in weather_data %}
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">{{ forecast['dt_txt'] }}</h5>
+                    <p class="card-text">
+                        <img src="http://openweathermap.org/img/wn/{{ forecast['weather'][0]['icon'] }}.png" alt="Weather icon">
+                        <strong>{{ forecast['main']['temp'] }} °F</strong><br>
+                        {{ forecast['weather'][0]['description'] }}
+                    </p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+{% endblock %}
