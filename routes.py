@@ -101,7 +101,7 @@ def weather():
     if form.validate_on_submit() or request.method == 'GET':
         zipcode = form.zipcode.data or request.args.get('zipcode')
         if zipcode:
-            api_key = '860de6d5fcb1751652a81e929550c60a'
+            api_key = ''
             url = f'http://api.openweathermap.org/data/2.5/forecast?zip={zipcode},us&appid={api_key}&units=imperial'
             response = requests.get(url)
             if response.status_code == 200:
