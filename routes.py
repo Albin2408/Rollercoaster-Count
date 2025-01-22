@@ -103,7 +103,7 @@ def weather():
     return render_template('weather.html', title='Weather', form=form, weather_data=weather_data)
 
 def get_weather(zipcode):
-    api_key = '860de6d5fcb1751652a81e929550c60a'
+    api_key = ''
     url = f'http://api.openweathermap.org/data/2.5/forecast?zip={zipcode},us&appid={api_key}&units=imperial'
     response = requests.get(url)
     if response.status_code == 200:
