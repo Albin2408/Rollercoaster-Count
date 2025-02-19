@@ -1,92 +1,76 @@
-# Rollercoaster Tracker
+🎢 Rollercoaster Tracker - Flask Web Application
+🚀 Overview
 
-Rollercoaster Tracker is a web application that allows users to track rollercoasters they have ridden, want to ride, and view weather forecasts for their favorite amusement parks.
+Rollercoaster Tracker is a Flask-based web application that allows users to track rollercoasters they've ridden, maintain a wishlist of coasters they want to ride, view the average ratings for coasters, and check the weather forecasts for amusement parks. Users can register, log in, and maintain their personal coaster list while contributing to a global leaderboard ranking coasters based on popularity and reviews.
+🌟 Features
 
-## Features
+    User Authentication: Sign up, log in, and securely manage accounts using Flask-Login and Flask-Bcrypt.
+    Coaster Tracking: Users can add rollercoasters to their personal list, mark them as "ridden" or "wishlist."
+    Global Ratings: Displays average ratings based on all user reviews.
+    Weather Integration: Fetches real-time 7-day weather forecasts for amusement parks using the OpenWeatherMap API.
+    Leaderboard: Shows the most popular and highest-rated rollercoasters based on user reviews.
+    Database Management: Stores coasters and user data using Flask-SQLAlchemy.
+    CSV Import: Automatically populates the database with rollercoaster data from a CSV file.
+    Responsive UI: Uses Bootstrap for a mobile-friendly experience.
 
-- User Registration and Login
-- Track Rollercoasters by Park
-- Mark Rollercoasters as Ridden
-- View and Search Rollercoasters
-- Weather Forecast for Amusement Parks
+🛠️ Tech Stack
+Technology	Purpose
+Python (Flask)	Web framework
+Flask-Login	User authentication
+Flask-SQLAlchemy	ORM for database management
+Flask-WTF	Form handling
+Bootstrap	Frontend styling
+OpenWeatherMap API	Weather forecasts
+SQLite / PostgreSQL	Database
+WTForms	Form validation
+Jinja2	Templating engine
+📸 Screenshots
 
-## Technologies Used
+🔹 Include some screenshots of your app's interface here.
+🔧 Installation & Setup
+1️⃣ Clone the Repository
 
-- Flask (Python web framework)
-- Flask-SQLAlchemy (ORM)
-- Flask-Login (User session management)
-- WTForms (Form handling)
-- OpenWeatherMap API (Weather data)
-- HTML, CSS, Bootstrap (Frontend)
+git clone https://github.com/yourusername/rollercoaster-tracker.git
+cd rollercoaster-tracker
 
-## Installation
+2️⃣ Create & Activate a Virtual Environment
 
-1. **Clone the repository**:
+python -m venv venv
+source venv/bin/activate  # macOS/Linux
+venv\Scripts\activate     # Windows
 
-    ```bash
-    git clone https://github.com/yourusername/yourrepository.git
-    cd yourrepository
-    ```
+3️⃣ Install Dependencies
 
-2. **Create a virtual environment**:
+pip install -r requirements.txt
 
-    ```bash
-    python -m venv venv
-    ```
+4️⃣ Set Up the Database
 
-3. **Activate the virtual environment**:
+python init_db.py  # Initializes the database
+python populate_db.py  # Populates the database with coaster data
 
-    - On Windows:
+5️⃣ Set Up API Keys 
 
-        ```bash
-        venv\Scripts\activate
-        ```
+Create a .env file and add your OpenWeatherMap API key:
 
-    - On MacOS/Linux:
+WEATHER_API_KEY=your_api_key_here
 
-        ```bash
-        source venv/bin/activate
-        ```
+6️⃣ Run the Application
 
-4. **Install the dependencies**:
+python app.py
 
-    ```bash
-    pip install -r requirements.txt
-    ```
+Then open http://127.0.0.1:5000 in your browser.
+📜 API Integration
 
-5. **Set up the database**:
+This project integrates the OpenWeatherMap API for real-time weather forecasts. To enable this feature:
 
-    ```bash
-    python init_db.py
-    ```
+    Get a free API key from OpenWeatherMap.
+    Add it to your .env file or update the WEATHER_API_KEY variable in routes.py.
 
-6. **Populate the database with rollercoasters**:
+💡 Future Enhancements
 
-    ```bash
-    python populate_db.py
-    ```
+    🌎 Deploy to the cloud (Heroku/Render).
+    📊 Advanced analytics & ride stats for users.
+    🏆 Badges & achievements for tracking progress.
+    🔔 Notifications for upcoming park events.
+    📍 Map integration to visualize coasters worldwide.
 
-7. **Run the application**:
-
-    ```bash
-    python app.py
-    ```
-
-8. **Access the application**:
-
-    Open your web browser and go to `http://127.0.0.1:5000`
-
-## Usage
-
-- Register a new account or log in with an existing account.
-- Add rollercoasters to your tracker by entering the park and coaster details.
-- View all rollercoasters, search by park, and mark coasters as ridden.
-- Check the weather forecast for your favorite parks.
-
-## Configuration
-
-To use the weather feature, you need an API key from OpenWeatherMap. Add your API key to the `config.py` file:
-
-```python
-# config.py
-WEATHER_API_KEY = 'your_openweathermap_api_key'
