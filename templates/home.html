@@ -1,36 +1,60 @@
 {% extends "base.html" %}
 
-{% block title %}Home{% endblock %}
-
 {% block content %}
-<div class="jumbotron jumbotron-fluid">
-    <div class="container">
-        <h1 class="display-4">Welcome, {{ current_user.username }}!</h1>
-        <p class="lead">Track your rollercoaster experiences and more.</p>
+<div class="container">
+    <h1 class="mt-4">Welcome, {{ current_user.username }}!</h1>
+
+    <h3>Your Tracked Rollercoasters</h3>
+
+    <!-- Filter Buttons -->
+    <div class="btn-group mb-3">
+        <a href="{{ url_for('main.home') }}" class="btn btn-primary {% if filter_type is none %}active{% endif %}">All</a>
+        <a href="{{ url_for('main.home', filter='ridden') }}" class="btn btn-success {% if filter_type == 'ridden' %}active{% endif %}">Ridden</a>
+        <a href="{{ url_for('main.home', filter='wishlist') }}" class="btn btn-warning {% if filter_type == 'wishlist' %}active{% endif %}">Wishlist</a>
     </div>
-</div>
-<div class="text-center">
-    <img src="{{ url_for('static', filename='images/steelvengenceNight.jpg') }}" class="img-fluid" alt="Rollercoaster Image">
-</div>
-<div class="mt-4">
-    <h2>Your Rollercoasters</h2>
-    <form class="form-inline my-2 my-lg-0" method="GET" action="{{ url_for('main.home') }}">
-        <input class="form-control mr-sm-2" type="search" placeholder="Search by park" aria-label="Search" name="park">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form>
-    <a href="{{ url_for('main.add_coaster') }}" class="btn btn-primary mt-3">Add a Coaster</a>
-    <div class="mt-4">
-        {% for coaster in coasters %}
-            <div class="card mb-3">
-                <div class="card-body">
-                    <h5 class="card-title">{{ coaster.name }}</h5>
-                    <p class="card-text">
-                        <strong>Location:</strong> {{ coaster.location }}<br>
-                        <strong>Ridden:</strong> {{ 'Yes' if coaster.ridden else 'No' }}
-                    </p>
-                </div>
+
+    <!-- Display Tracked Coasters -->
+    {% if coasters %}
+        {% for user_coaster in coasters %}
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title"><strong>{{ user_coaster.coaster.name }}</strong></h5>
+                <p><strong>Location:</strong> {{ user_coaster.coaster.location }}</p>
+                <p><strong>Ridden:</strong> {{ "Yes" if user_coaster.ridden else "No" }}</p>
+                <p><strong>Wishlist:</strong> {{ "Yes" if user_coaster.wishlist else "No" }}</p>
+
+                <!-- Global Average Rating -->
+                <p><strong>Global Average Rating:</strong> 
+                    {% if user_coaster.coaster.average_rating %}
+                        {{ user_coaster.coaster.average_rating|round(2) }}
+                    {% else %}
+                        Not Rated
+                    {% endif %}
+                </p>
+
+                <!-- User's Personal Rating -->
+                <p><strong>Your Rating:</strong> 
+                    {% if user_coaster.rating %}
+                        {{ user_coaster.rating }}
+                    {% else %}
+                        Not Rated
+                    {% endif %}
+                </p>
+
+                <!-- Action Buttons -->
+                <a href="{{ url_for('main.edit_coaster', coaster_id=user_coaster.coaster.id) }}" class="btn btn-primary">Edit</a>
+                <a href="{{ url_for('main.review_coaster', coaster_id=user_coaster.coaster.id) }}" class="btn btn-info">Review</a>
+
+                <form method="POST" action="{{ url_for('main.delete_coaster', coaster_id=user_coaster.coaster.id) }}" class="d-inline">
+                    <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to remove this coaster from your list?');">Remove</button>
+                </form>
             </div>
+        </div>
         {% endfor %}
-    </div>
+    {% else %}
+        <p>No coasters found in this category.</p>
+    {% endif %}
+
+    <a href="{{ url_for('main.search_coasters') }}" class="btn btn-primary">Search & Add Coasters</a>
 </div>
 {% endblock %}

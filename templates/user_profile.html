@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h2 class="mt-4">{{ current_user.username }}'s Profile</h2>
+
+    <h3>Tracked Coasters</h3>
+    <ul class="list-group">
+        {% for coaster in tracked_coasters %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <strong>{{ coaster.coaster.name }}</strong> 
+                <span>{{ "Ridden" if coaster.ridden else "Wishlist" }}</span>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <h3 class="mt-4">My Reviews</h3>
+    <ul class="list-group">
+        {% for review in user_reviews %}
+            <li class="list-group-item">
+                <strong>{{ review.coaster.name }}</strong> - Rated {{ review.rating }}/10
+                <p>{{ review.review }}</p>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

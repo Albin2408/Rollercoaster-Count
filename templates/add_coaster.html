@@ -1,29 +1,37 @@
 {% extends "base.html" %}
-
-{% block title %}Add Coaster{% endblock %}
-
 {% block content %}
-<div class="row justify-content-center">
-    <div class="col-md-6">
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">Add Coaster</h5>
-                <form method="POST" action="">
-                    {{ form.hidden_tag() }}
-                    <div class="form-group">
-                        {{ form.park.label(class="form-control-label") }}
-                        {{ form.park(class="form-control") }}
-                    </div>
-                    <div class="form-group">
-                        {{ form.coaster.label(class="form-control-label") }}
-                        {{ form.coaster(class="form-control") }}
-                    </div>
-                    <div class="form-group">
-                        {{ form.submit(class="btn btn-primary") }}
-                    </div>
-                </form>
-            </div>
+<div class="container">
+    <h2>Add Coaster</h2>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+
+        <div class="form-group">
+            {{ form.coaster.label }}
+            {{ form.coaster(class="form-control") }}
         </div>
-    </div>
+
+        <div class="form-group">
+            {{ form.wishlist.label }}
+            {{ form.wishlist(class="form-check-input") }}
+        </div>
+
+        <div class="form-group">
+            {{ form.ridden.label }}
+            {{ form.ridden(class="form-check-input") }}
+        </div>
+
+        <div class="form-group">
+            {{ form.rating.label }}
+            {{ form.rating(class="form-control") }}
+        </div>
+
+        <div class="form-group">
+            {{ form.notes.label }}
+            {{ form.notes(class="form-control", rows=3) }}
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save Coaster</button>
+        <a href="{{ url_for('main.home') }}" class="btn btn-secondary">Cancel</a>
+    </form>
 </div>
 {% endblock %}

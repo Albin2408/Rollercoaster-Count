@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h2>Search for a Rollercoaster</h2>
+    
+    <form method="GET" action="{{ url_for('main.search_coasters') }}">
+        <div class="input-group mb-3">
+            <input type="text" name="query" class="form-control" placeholder="Search by park or coaster.." value="{{ query }}">
+            <div class="input-group-append">
+                <button class="btn btn-success" type="submit">Search</button>
+            </div>
+        </div>
+    </form>
+
+    {% if coasters %}
+        <h3>Search Results</h3>
+        <div class="list-group">
+            {% for coaster in coasters %}
+                <div class="list-group-item d-flex justify-content-between align-items-center">
+                    <span><strong>{{ coaster.name }}</strong> - {{ coaster.location }}</span>
+                    <form method="POST" action="{{ url_for('main.track_coaster', coaster_id=coaster.id) }}">
+                        <button type="submit" class="btn btn-primary">Track Coaster</button>
+                    </form>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>No coasters found. Try another search.</p>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <h2 class="mt-4">Edit Coaster</h2>
+    
+    
+    {% for message in get_flashed_messages() %}
+    <div class="alert alert-info">{{ message }}</div>
+    {% endfor %}
+
+    <form method="POST">
+        {{ form.hidden_tag() }} <!-- CSRF Token for security -->
+
+        <!-- Wishlist Checkbox -->
+        <input type="hidden" name="wishlist" value="off">
+        <div class="form-group form-check">
+            <input type="checkbox" class="form-check-input" id="wishlist" name="wishlist" {% if form.wishlist.data %}checked{% endif %}>
+            <label class="form-check-label" for="wishlist">{{ form.wishlist.label.text }}</label>
+        </div>
+
+        <!-- Ridden Checkbox -->
+        <input type="hidden" name="ridden" value="off">
+        <div class="form-group form-check">
+            <input type="checkbox" class="form-check-input" id="ridden" name="ridden" {% if form.ridden.data %}checked{% endif %}>
+            <label class="form-check-label" for="ridden">{{ form.ridden.label.text }}</label>
+        </div>
+
+        <!-- Rating Input -->
+        <div class="form-group">
+            {{ form.rating.label }}
+            <input type="number" class="form-control" name="rating" placeholder="Enter rating (1-10)" value="{{ form.rating.data if form.rating.data else '' }}" min="1" max="10">
+        </div>
+
+        <!-- Notes Textarea -->
+        <div class="form-group">
+            {{ form.notes.label }}
+            <textarea class="form-control" name="notes" rows="3" placeholder="Enter any notes">{{ form.notes.data if form.notes.data else '' }}</textarea>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary">Save Coaster</button>
+
+        <!-- Delete Coaster Button -->
+        {% if coaster %}
+        <form method="POST" action="{{ url_for('main.delete_coaster', coaster_id=coaster.id) }}" class="d-inline">
+            <button type="submit" class="btn btn-danger">Delete Coaster</button>
+        </form>
+        {% endif %}
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h2 class="mt-4">Review {{ coaster.name }}</h2>
+
+    <form method="POST" action="{{ url_for('main.review_coaster', coaster_id=coaster.id) }}">
+        {{ form.hidden_tag() }}
+
+        <div class="form-group">
+            <label>Rating (1-10)</label>
+            <input type="number" name="rating" min="1" max="10" class="form-control" value="{{ user_review.rating if user_review else '' }}">
+        </div>
+
+        <div class="form-group">
+            <label>Review</label>
+            <textarea name="review" class="form-control">{{ user_review.review if user_review else '' }}</textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit Review</button>
+    </form>
+</div>
+{% endblock %}
