@@ -68,7 +68,7 @@ This project integrates the OpenWeatherMap API for real-time weather forecasts. 
 
 💡 Future Enhancements
 
-    🌎 Deploy to the cloud (Heroku/Render).
+
     📊 Advanced analytics & ride stats for users.
     🏆 Badges & achievements for tracking progress.
     🔔 Notifications for upcoming park events.
